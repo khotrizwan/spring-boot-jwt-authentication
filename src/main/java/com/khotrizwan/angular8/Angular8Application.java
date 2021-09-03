@@ -16,7 +16,9 @@ public class Angular8Application {
 
 	String s;
 	public static void main(String[] args) {
-		//SpringApplication.run(Angular8Application.class, args);
+		SpringApplication.run(Angular8Application.class, args);
+
+		/*
 		Angular8Application x = new Angular8Application();
 		x.s = "1";
 		Angular8Application y = x;
@@ -62,6 +64,7 @@ public class Angular8Application {
 		System.out.println(a);
 	}
 		System.out.println(m.get(null));
+		*/
 	}
 
 }

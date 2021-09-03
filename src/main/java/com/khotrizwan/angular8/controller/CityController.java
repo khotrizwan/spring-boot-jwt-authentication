@@ -2,7 +2,6 @@ package com.khotrizwan.angular8.controller;
 // Create Controller
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.khotrizwan.angular8.model.City;
 import com.khotrizwan.angular8.model.ResponseBean;
@@ -21,45 +20,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 public class CityController {
 
-    Logger log = LoggerFactory.getLogger(CityController.class);
+    private static final Logger log = LoggerFactory.getLogger(CityController.class);
+    
+    //Logger log = LoggerFactory.getLogger(CityController.class);
 
     @Autowired
     CityService service;
 
     @GetMapping("/city-list")
-    @CrossOrigin(origins = "http://localhost:4200")
+   // @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResponseBean>  cityList(HttpServletRequest request)  {
         log.debug("Inside cityList");
-        HttpSession session = request.getSession();
-        session.setAttribute("Test", "Test Session");
-        log.debug("" + session.getAttribute("Test"));
-        System.out.println("Inside cityList");
         return setResponse(service.getAllCities(), "Data not faund");
     }
     @GetMapping("/city/{id}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResponseBean>  getCity(@PathVariable("id") long id, HttpServletRequest request) {
-        HttpSession session = request.getSession();
         log.debug("Inside getCity");
-        log.debug("" + session.getAttribute("Test"));
-        if(session.getAttribute("Test") == null)
-         return setResponse(null, "Invalid Session");
-
-        System.out.println("Inside getCity");
         return setResponse(service.getCity(id), "Data not faund");
     }
 
     @PostMapping("/edit-city/{id}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResponseBean>  editCity(@PathVariable("id") long id, @RequestBody City city, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        log.debug("Inside editCity");
-        log.debug("" + session.getAttribute("Test"));
-        if(session.getAttribute("Test") == null)
-         return setResponse(null, "Invalid Session");
-
         log.debug("Inside editCity:" + id + ":" + city.getId());
         System.out.println("Inside editCity:" + id + ":" + city.getId());
         if(id == city.getId() && service.getCity(id) != null) {
@@ -71,16 +57,9 @@ public class CityController {
     }
 
     @PostMapping("/add-city")
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<ResponseBean> addCity(@RequestBody City city, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        log.debug("Inside addCity");
-        log.debug("" + session.getAttribute("Test"));
-        if(session.getAttribute("Test") == null)
-         return setResponse(null, "Invalid Session");
-
         log.debug("Inside addCity " + city);
-        System.out.println("Inside addCityt");
         return setResponse(service.save(city), "Additiomn Failed");
     }
     

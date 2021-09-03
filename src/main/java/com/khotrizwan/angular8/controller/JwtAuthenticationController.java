@@ -58,8 +58,10 @@ public class JwtAuthenticationController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
+			log.error("User [" + username + "] is disabled", e);
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
+			log.error("BadCredentialsException User [" + username + "]", e);
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 	}
